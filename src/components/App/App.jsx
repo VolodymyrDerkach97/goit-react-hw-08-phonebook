@@ -1,47 +1,76 @@
-import Contacts from '../Contacts';
-import ContactForm from '../ContactForm';
-import Filter from '../Filter';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { selectContacts, selectFilter } from 'redux/selectors';
-
-import { useEffect } from 'react';
-import { fetchContacts } from 'redux/operations';
-
-import { Container } from './App.styled';
+import { useEffect, lazy } from 'react';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { Route, Routes } from 'react-router-dom';
+
+import Layout from 'components/Layout/Layout';
+
+import HomePage from '../../pages/Home';
+import RegisterPage from '../../pages/Register';
+import LoginPage from '../../pages/Login';
+
+import RestrictedRoute from 'components/RestrictedRoute/RestrictedRoute';
+import PrivateRoute from 'components/PrivateRoute/PrivateRoute';
+
+import { refreshUser } from 'redux/auth/operations';
+
+// import ContactsMenu from 'components/ContactsMenu';
+const ContactsMenu = lazy(() => import('components/ContactsMenu'));
+
 export const App = () => {
-  const contacts = useSelector(selectContacts);
-  const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  const filterContacts = () => {
-    const normalaizeContacts = filter.toLowerCase();
-    return [...contacts]
-      .filter(contact =>
-        contact.name.toLowerCase().includes(normalaizeContacts)
-      )
-      .sort((a, b) => a.name.localeCompare(b.name));
-  };
-
   return (
-    <Container>
-      <h2>Phonebook</h2>
-      <ContactForm />
-
-      <h2>Contacts</h2>
-      <p>Total number of contacts: {contacts.length} </p>
-      <Filter />
-      <Contacts contacts={filterContacts()} />
-
+    <>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route
+            path="/register"
+            element={
+              <RestrictedRoute
+                redirectTo="/contacts"
+                component={<RegisterPage />}
+              />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <RestrictedRoute
+                redirectTo="/contacts"
+                component={<LoginPage />}
+              />
+            }
+          />
+          <Route
+            path="/contacts"
+            element={
+              <PrivateRoute redirectTo="/login" component={<ContactsMenu />} />
+            }
+          />
+        </Route>
+      </Routes>
       <ToastContainer autoClose={2000} />
-    </Container>
+      {/* <Container>
+        <h2>Phonebook</h2>
+        <ContactForm />
+
+        <h2>Contacts</h2>
+        <p>Total number of contacts: {contacts.length} </p>
+        <Filter />
+        <Contacts contacts={filterContacts()} />
+
+        <ToastContainer autoClose={2000} />
+      </Container> */}
+    </>
   );
 };

@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
-  const [phone, setNumber] = useState('');
+  const [number, setNumber] = useState('');
 
   const contacts = useSelector(selectContacts);
   const isLoading = useSelector(selectIsLoading);
@@ -25,7 +25,7 @@ const ContactForm = () => {
       toast.error(`${name} is already in contacts`);
       return;
     }
-    dispatch(addContact({ name, phone }));
+    dispatch(addContact({ name, number }));
     reset();
   };
 
@@ -58,7 +58,7 @@ const ContactForm = () => {
           mask="999-999-9999"
           id={telInputId}
           type="tel"
-          value={phone}
+          value={number}
           onChange={({ target: { value } }) => setNumber(value)}
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"

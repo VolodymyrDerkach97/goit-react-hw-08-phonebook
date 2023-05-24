@@ -5,14 +5,14 @@ import { DeleteButton, Contact, ContactWrapper } from './ContactsItem.styled';
 import { deleteContact } from 'redux/operations';
 import { selectIsLoading } from 'redux/selectors';
 
-const ContactsItem = ({ name, id, phone }) => {
+const ContactsItem = ({ name, id, number }) => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
   return (
     <Contact>
       <ContactWrapper>
         {name}: <br />
-        {phone}
+        {number}
       </ContactWrapper>
 
       <DeleteButton

@@ -6,6 +6,9 @@ import { fetchContacts } from 'redux/operations';
 import AddContactModal from 'components/AddContactModal/AddContactModal';
 import Filter from '../Filter';
 
+import { Wrapper } from './ContactMenu.styled';
+import { Button } from '@mui/material';
+
 const ContactsMenu = () => {
   const [showModal, setShowModal] = useState(false);
   const contacts = useSelector(selectContacts);
@@ -30,19 +33,21 @@ const ContactsMenu = () => {
   };
   return (
     <>
-      <h2>Phonebook</h2>
-      <button
-        onClick={() => {
-          setShowModal(prev => !prev);
-        }}
-      >
-        add contact modal
-      </button>
-      {showModal && <AddContactModal onClose={togleModal} />}
+      <Wrapper>
+        {showModal && <AddContactModal onClose={togleModal} />}
 
-      <h2>Contacts</h2>
-      <p>Total number of contacts: {contacts.length} </p>
-      <Filter />
+        <p>Total number of contacts: {contacts.length} </p>
+        <Filter />
+        <Button
+          variant="contained"
+          onClick={() => {
+            setShowModal(prev => !prev);
+          }}
+        >
+          add contact
+        </Button>
+      </Wrapper>
+
       <Contacts contacts={filterContacts()} />
     </>
   );

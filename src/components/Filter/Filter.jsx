@@ -1,4 +1,3 @@
-import { Input } from '../ContactForm/ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilter } from 'redux/selectors';
 import { filterContact } from 'redux/filterSlice';
@@ -10,7 +9,7 @@ const Filter = () => {
   return (
     <>
       <p>Find contacts by name</p>
-      <Input
+      <input
         type="text"
         name="filter"
         value={value}

@@ -6,6 +6,7 @@ import {
   logOutApi,
   refreshUserApi,
 } from 'service/authContactsApi';
+import { toast } from 'react-toastify';
 
 // Utility to add JWT
 const setAuthHeader = token => {
@@ -25,13 +26,16 @@ export const register = createAsyncThunk(
   'auth/register',
   async (credentials, thunkAPI) => {
     try {
-      const res = await registerApi(credentials);
+      const res = await toast.promise(registerApi(credentials), {
+        pending: 'Loading...',
+        success: 'You are registered 👌',
+      });
       // After successful registration, add the token to the HTTP header
 
       setAuthHeader(res.token);
       return res;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(error.response.status);
     }
   }
 );
@@ -47,9 +51,10 @@ export const logIn = createAsyncThunk(
       const res = await logInApi(credentials);
       // After successful login, add the token to the HTTP header
       setAuthHeader(res.token);
+      console.log(res);
       return res;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(error.response.status);
     }
   }
 );

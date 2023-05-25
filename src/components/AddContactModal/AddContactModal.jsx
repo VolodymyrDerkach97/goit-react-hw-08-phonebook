@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { selectContacts, selectIsLoading } from 'redux/selectors';
@@ -6,10 +6,13 @@ import { addContact } from 'redux/operations';
 
 import { nanoid } from 'nanoid';
 
-import { Form, InputWraper, Input, Button } from './ContactForm.styled';
 import { toast } from 'react-toastify';
+import { createPortal } from 'react-dom';
+import { Overlay, ModalStyled } from './AddContactModal.styled';
 
-const AddContactModal = () => {
+const portalModal = document.querySelector('#modal-root');
+
+const AddContactModal = ({ onClose }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -27,23 +30,39 @@ const AddContactModal = () => {
     }
     dispatch(addContact({ name, number }));
     reset();
+    onClose();
   };
 
   const reset = () => {
     setName('');
     setNumber('');
   };
+  const onCloseOverlay = e => {
+    if (e.currentTarget === e.target) {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    const onCloseKey = e => {
+      if (e.code === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', onCloseKey);
+    return () => window.removeEventListener('keydown', onCloseKey);
+  }, [onClose]);
 
   const nameInputId = nanoid();
   const telInputId = nanoid();
 
-  return (
-    <div className="Overlay">
-      <div className="Modal">
-        <Form action="" onSubmit={onSubmitContact}>
-          <InputWraper>
+  return createPortal(
+    <Overlay onClick={onCloseOverlay}>
+      <ModalStyled>
+        <form action="" onSubmit={onSubmitContact}>
+          <div>
             <label htmlFor={nameInputId}>Name</label>
-            <Input
+            <input
               id={nameInputId}
               type="text"
               value={name}
@@ -53,10 +72,10 @@ const AddContactModal = () => {
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               required
             />
-          </InputWraper>
-          <InputWraper>
+          </div>
+          <div>
             <label htmlFor={telInputId}>Number</label>
-            <Input
+            <input
               mask="999-999-9999"
               id={telInputId}
               type="tel"
@@ -67,14 +86,15 @@ const AddContactModal = () => {
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required
             />
-          </InputWraper>
+          </div>
 
-          <Button type="submit" disabled={isLoading}>
+          <button type="submit" disabled={isLoading}>
             Add contact
-          </Button>
-        </Form>
-      </div>
-    </div>
+          </button>
+        </form>
+      </ModalStyled>
+    </Overlay>,
+    portalModal
   );
 };
 

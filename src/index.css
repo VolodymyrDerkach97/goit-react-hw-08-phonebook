@@ -4,7 +4,9 @@ body {
   font-family: sans-serif;
   line-height: 1.5;
   text-align: center;
-  background-color: #f8e2e2;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
 }
 h1,
 h2,
@@ -25,4 +27,7 @@ img {
   display: block;
   max-width: 100%;
   height: auto;
+}
+a{
+  text-decoration: none;
 }

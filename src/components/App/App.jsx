@@ -17,6 +17,7 @@ import RestrictedRoute from 'components/RestrictedRoute/RestrictedRoute';
 import PrivateRoute from 'components/PrivateRoute/PrivateRoute';
 
 import { refreshUser } from 'redux/auth/operations';
+import { Container } from './App.styled';
 
 // import ContactsMenu from 'components/ContactsMenu';
 const ContactsMenu = lazy(() => import('components/ContactsMenu'));
@@ -29,17 +30,14 @@ export const App = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <Container>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route
             path="/register"
             element={
-              <RestrictedRoute
-                redirectTo="/contacts"
-                component={<RegisterPage />}
-              />
+              <RestrictedRoute redirectTo="/" component={<RegisterPage />} />
             }
           />
           <Route
@@ -71,6 +69,6 @@ export const App = () => {
 
         <ToastContainer autoClose={2000} />
       </Container> */}
-    </>
+    </Container>
   );
 };

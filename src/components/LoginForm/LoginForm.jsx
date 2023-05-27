@@ -1,11 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from 'redux/auth/operations';
+import { selectStatusError } from 'redux/auth/selectors';
+
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { WrapperForm } from './LoginForm.style';
-import { selectStatusError } from 'redux/auth/selectors';
 
 const validationSchema = yup.object({
   email: yup
@@ -30,8 +32,6 @@ export const LoginForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: value => {
-      console.log(value);
-
       dispatch(
         logIn({
           email: value.email,

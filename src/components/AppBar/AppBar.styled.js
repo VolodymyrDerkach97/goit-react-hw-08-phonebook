@@ -4,7 +4,8 @@ export const HeaderNavigation = styled.header`
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  height: 60px;
+  /* height: 60px; */
+  min-height: 60px;
 
   padding: 0 20px;
   background-color: #000165;

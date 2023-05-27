@@ -1,14 +1,21 @@
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { selectContacts, selectIsLoading } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 import { addContact } from 'redux/operations';
 
 import { nanoid } from 'nanoid';
 
 import { toast } from 'react-toastify';
 import { createPortal } from 'react-dom';
-import { Overlay, ModalStyled } from './AddContactModal.styled';
+import {
+  Overlay,
+  ModalStyled,
+  InputWrapper,
+  InputStyled,
+} from './AddContact.styled';
+import { Button } from '@mui/material';
 
 const portalModal = document.querySelector('#modal-root');
 
@@ -17,7 +24,6 @@ const AddContactModal = ({ onClose }) => {
   const [number, setNumber] = useState('');
 
   const contacts = useSelector(selectContacts);
-  const isLoading = useSelector(selectIsLoading);
 
   const dispatch = useDispatch();
 
@@ -60,9 +66,9 @@ const AddContactModal = ({ onClose }) => {
     <Overlay onClick={onCloseOverlay}>
       <ModalStyled>
         <form action="" onSubmit={onSubmitContact}>
-          <div>
+          <InputWrapper>
             <label htmlFor={nameInputId}>Name</label>
-            <input
+            <InputStyled
               id={nameInputId}
               type="text"
               value={name}
@@ -72,11 +78,11 @@ const AddContactModal = ({ onClose }) => {
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               required
             />
-          </div>
-          <div>
+          </InputWrapper>
+          <InputWrapper>
             <label htmlFor={telInputId}>Number</label>
-            <input
-              mask="999-999-9999"
+            <InputStyled
+              mask="+999-999-9999"
               id={telInputId}
               type="tel"
               value={number}
@@ -86,11 +92,11 @@ const AddContactModal = ({ onClose }) => {
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required
             />
-          </div>
+          </InputWrapper>
 
-          <button type="submit" disabled={isLoading}>
-            Add contact
-          </button>
+          <Button variant="contained" type="submit">
+            add contact
+          </Button>
         </form>
       </ModalStyled>
     </Overlay>,
@@ -99,3 +105,7 @@ const AddContactModal = ({ onClose }) => {
 };
 
 export default AddContactModal;
+
+AddContactModal.propTypes = {
+  onClose: PropTypes.func,
+};

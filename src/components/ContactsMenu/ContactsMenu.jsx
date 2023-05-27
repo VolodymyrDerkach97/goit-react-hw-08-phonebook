@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts, selectFilter } from 'redux/selectors';
 import { useEffect, useState } from 'react';
 import { fetchContacts } from 'redux/operations';
-import AddContactModal from 'components/AddContactModal/AddContactModal';
+import AddContactModal from 'components/AddContact/AddContact';
 import Filter from '../Filter';
 
-import { Wrapper } from './ContactMenu.styled';
+import { Wrapper } from './ContactsMenu.styled';
 import { Button } from '@mui/material';
 
 const ContactsMenu = () => {

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilter } from 'redux/selectors';
 import { filterContact } from 'redux/filterSlice';
-import { TextField } from '@mui/material';
+
 import { TextFildStyled } from './Filter.styled';
 
 const Filter = () => {

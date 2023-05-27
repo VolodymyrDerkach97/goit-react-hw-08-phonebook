@@ -1,5 +1,6 @@
 import { useAuth } from 'hooks';
 import { StyledNav, StyledNavLink } from './Navigation.style';
+
 const Navigation = () => {
   const { isLoggedIn } = useAuth();
 

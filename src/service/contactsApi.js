@@ -21,8 +21,8 @@ export const deleteContactsApi = async contactId => {
   return res.data;
 };
 
-export const updateContactsApi = async (contactId, credentials) => {
-  const res = await axios.patch(`/contacts/${contactId}`, credentials);
+export const editContactsApi = async ({ id, ...credentials }) => {
+  const res = await axios.patch(`/contacts/${id}`, credentials);
 
   return res.data;
 };

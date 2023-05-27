@@ -3,10 +3,14 @@ import styled from 'styled-components';
 
 // MuiOutlinedInput-input
 export const TextFildStyled = styled(TextField)({
+  ' &.MuiFormControl-root': {
+    marginLeft: 'auto',
+    marginRight: '15px',
+  },
   '& .MuiOutlinedInput-input': {
-    padding: '5px',
+    padding: '6px',
   },
   ' #outlined-helperText-label': {
-    top: '-9',
+    top: '-9px',
   },
 });

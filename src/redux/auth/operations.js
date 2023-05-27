@@ -51,7 +51,7 @@ export const logIn = createAsyncThunk(
       const res = await logInApi(credentials);
       // After successful login, add the token to the HTTP header
       setAuthHeader(res.token);
-      console.log(res);
+
       return res;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.status);

@@ -1,6 +1,7 @@
 import {
   addContactsApi,
   deleteContactsApi,
+  editContactsApi,
   fetchContactsApi,
 } from 'service/contactsApi';
 import { toast } from 'react-toastify';
@@ -32,6 +33,7 @@ export const addContact = createAsyncThunk(
         success: `Contacts ${contact.name} added 👌`,
         error: `Error🤯`,
       });
+      console.log('res', res);
       return res;
     } catch (error) {
       toast.error(error.message);
@@ -49,6 +51,24 @@ export const deleteContact = createAsyncThunk(
         success: `Contact ${name} deleted 👌`,
         error: `Deletion error ${name} 🤯`,
       });
+      return res;
+    } catch (error) {
+      toast.error(error.message);
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const editContact = createAsyncThunk(
+  'contacts/editContact',
+  async (contact, thunkApi) => {
+    try {
+      const res = await toast.promise(editContactsApi(contact), {
+        pending: 'Loading...',
+        success: `Contact ${contact.name} update 👌`,
+        error: `Updation error ${contact.name}🤯`,
+      });
+
       return res;
     } catch (error) {
       toast.error(error.message);

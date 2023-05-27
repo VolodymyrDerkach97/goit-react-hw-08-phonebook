@@ -1,11 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from 'redux/auth/operations';
+import { selectStatusError } from 'redux/auth/selectors';
+
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { WrapperForm } from '../LoginForm/LoginForm.style';
-import { selectStatusError } from 'redux/auth/selectors';
 
 const validationSchema = yup.object({
   name: yup
@@ -85,7 +87,7 @@ export const RegisterForm = () => {
           />
           {statusError === 400 ? (
             <div style={{ color: 'red' }}>
-              Користувач з таким email вже існує
+              Unable to register with this email
             </div>
           ) : (
             ''

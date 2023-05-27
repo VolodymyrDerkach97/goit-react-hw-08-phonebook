@@ -78,7 +78,7 @@ const EditContactModal = ({ onClose, editID }) => {
           <InputWrapper>
             <label htmlFor={telInputId}>Number</label>
             <InputStyled
-              mask="+999-999-9999"
+              mask="+99-99-99-99-999"
               id={telInputId}
               type="tel"
               value={number}

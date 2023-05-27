@@ -69,7 +69,7 @@ export const LoginForm = () => {
             helperText={formik.touched.password && formik.errors.password}
           />
           {statusError === 400 ? (
-            <div style={{ color: 'red' }}>Невірний логін або пароль</div>
+            <div style={{ color: 'red' }}>Invalid login or password</div>
           ) : (
             ''
           )}

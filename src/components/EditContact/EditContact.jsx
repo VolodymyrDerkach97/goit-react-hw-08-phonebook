@@ -13,6 +13,7 @@ import {
   ModalStyled,
   InputWrapper,
   InputStyled,
+  ButtonWrapper,
 } from './EditContact.styled';
 import { toast } from 'react-toastify';
 import { Button } from '@mui/material';
@@ -30,7 +31,11 @@ const EditContactModal = ({ onClose, editID }) => {
 
   const onSubmitContact = e => {
     e.preventDefault();
-    if (contacts.find(contact => contact.name === name)) {
+    if (
+      contacts.find(
+        contact => contact.name === name && contact.number === number
+      )
+    ) {
       toast.error(`${name} is already in contacts`);
       return;
     }
@@ -89,9 +94,14 @@ const EditContactModal = ({ onClose, editID }) => {
               required
             />
           </InputWrapper>
-          <Button variant="contained" type="submit">
-            Edit contact
-          </Button>
+          <ButtonWrapper>
+            <Button variant="contained" type="submit">
+              Edit contact
+            </Button>
+            <Button variant="contained" type="submit" onClick={() => onClose()}>
+              Close
+            </Button>
+          </ButtonWrapper>
         </form>
       </ModalStyled>
     </Overlay>,

@@ -38,3 +38,9 @@ export const InputStyled = styled(ReactInputMask)`
   max-width: calc(100vw - 48px);
   max-height: calc(100vh - 24px);
 `;
+export const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+`;

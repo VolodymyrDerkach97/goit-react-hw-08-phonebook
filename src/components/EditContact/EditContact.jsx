@@ -4,11 +4,7 @@ import { createPortal } from 'react-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { editContact } from 'redux/operations';
-import {
-  getOneContact,
-  selectContacts,
-  selectIsLoading,
-} from 'redux/selectors';
+import { getOneContact, selectContacts } from 'redux/selectors';
 
 import { nanoid } from 'nanoid';
 
@@ -19,6 +15,7 @@ import {
   InputStyled,
 } from './EditContact.styled';
 import { toast } from 'react-toastify';
+import { Button } from '@mui/material';
 
 const portalModal = document.querySelector('#modal-root');
 
@@ -30,7 +27,6 @@ const EditContactModal = ({ onClose, editID }) => {
   const [number, setNumber] = useState(getEditContact[0].number);
 
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
 
   const onSubmitContact = e => {
     e.preventDefault();
@@ -93,10 +89,9 @@ const EditContactModal = ({ onClose, editID }) => {
               required
             />
           </InputWrapper>
-
-          <button type="submit" disabled={isLoading}>
+          <Button variant="contained" type="submit">
             Edit contact
-          </button>
+          </Button>
         </form>
       </ModalStyled>
     </Overlay>,
